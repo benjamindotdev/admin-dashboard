@@ -133,7 +133,7 @@ export const mockEmailTemplates: EmailTemplate[] = [
         <p style="margin-bottom:8px;color:#000;">Hi {{buyerName}},</p>
         <p style="margin-bottom:8px;color:#000;">Your order for <strong>{{productName}}</strong> has been confirmed.</p>
         <p style="margin-bottom:8px;color:#000;">Order ID: {{orderId}}</p>
-        <p style="margin-bottom:8px;color:#000;">Amount: ${{ amount }}</p>
+        <p style="margin-bottom:8px;color:#000;">Amount: {{ amount }}</p>
         <p style="margin-bottom:16px;color:#000;">Seller: {{sellerName}}</p>
       </div>
     </div>
