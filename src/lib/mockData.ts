@@ -5,7 +5,7 @@ export const mockUsers: User[] = [
     {
         id: '1',
         name: 'John Seller',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'seller',
         status: 'approved',
         badgeLevel: 'Pro'
@@ -13,21 +13,21 @@ export const mockUsers: User[] = [
     {
         id: '2',
         name: 'Jane Buyer',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'buyer',
         status: 'active'
     },
     {
         id: '3',
         name: 'Mike Admin',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'admin',
         status: 'active'
     },
     {
         id: '4',
         name: 'Sarah Elite',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'seller',
         status: 'approved',
         badgeLevel: 'Elite'
@@ -35,7 +35,7 @@ export const mockUsers: User[] = [
     {
         id: '5',
         name: 'Tom Pending',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'seller',
         status: 'pending'
     }
@@ -108,37 +108,55 @@ export const mockEmailTemplates: EmailTemplate[] = [
         name: 'Seller Account Approved',
         subject: 'Welcome to Trendies! Your seller account has been approved',
         htmlContent: `
-      <h1>Congratulations, \{\{sellerName\}\}!</h1>
-      <p>Your seller account has been approved. You can now start listing your items.</p>
-      <p>Your current badge level: \{\{badgeLevel\}\}</p>
-      <a href="\{\{dashboardUrl\}\}">Go to Dashboard</a>
+  <body style="margin:0;padding:0;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 0;background:#fff;">
+      <div style="background:#fff;border-radius:8px;box-shadow:0 2px 8px #0001;padding:32px 24px;max-width:480px;width:100%;text-align:center;">
+        <h1 style="margin-bottom:16px;color:#000;">Congratulations, {{sellerName}}!</h1>
+        <p style="margin-bottom:8px;color:#000;">Your seller account has been approved. You can now start listing your items.</p>
+        <p style="margin-bottom:16px;color:#000;">Your current badge level: <strong>{{badgeLevel}}</strong></p>
+        <a href="{{dashboardUrl}}" style="display:inline-block;padding:12px 24px;background:#fff;color:#000;text-decoration:underline;border-radius:4px;font-weight:bold;border:1px solid #000;">Go to Dashboard</a>
+      </div>
+    </div>
+  </body>
     `,
         variables: ['sellerName', 'badgeLevel', 'dashboardUrl']
     },
     {
         id: 'order-confirmation',
         name: 'Order Confirmation',
-        subject: 'Order Confirmed - \{\{productName\}\}',
+        subject: 'Order Confirmed - {{productName}}',
         htmlContent: `
-      <h1>Order Confirmed!</h1>
-      <p>Hi \{\{buyerName\}\},</p>
-      <p>Your order for <strong>\{\{productName\}\}</strong> has been confirmed.</p>
-      <p>Order ID: \{\{orderId\}\}</p>
-      <p>Amount: $\{\{amount\}\}</p>
-      <p>Seller: \{\{sellerName\}\}</p>
+  <body style="margin:0;padding:0;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 0;background:#fff;">
+      <div style="background:#fff;border-radius:8px;box-shadow:0 2px 8px #0001;padding:32px 24px;max-width:480px;width:100%;text-align:center;">
+        <h1 style="margin-bottom:16px;color:#000;">Order Confirmed!</h1>
+        <p style="margin-bottom:8px;color:#000;">Hi {{buyerName}},</p>
+        <p style="margin-bottom:8px;color:#000;">Your order for <strong>{{productName}}</strong> has been confirmed.</p>
+        <p style="margin-bottom:8px;color:#000;">Order ID: {{orderId}}</p>
+        <p style="margin-bottom:8px;color:#000;">Amount: ${{ amount }}</p>
+        <p style="margin-bottom:16px;color:#000;">Seller: {{sellerName}}</p>
+      </div>
+    </div>
+  </body>
     `,
         variables: ['buyerName', 'productName', 'orderId', 'amount', 'sellerName']
     },
     {
         id: 'return-accepted',
         name: 'Return Request Accepted',
-        subject: 'Return Request Approved - \{\{productName\}\}',
+        subject: 'Return Request Approved - {{productName}}',
         htmlContent: `
-      <h1>Return Request Approved</h1>
-      <p>Hi \{\{buyerName\}\},</p>
-      <p>Your return request for <strong>\{\{productName\}\}</strong> has been approved.</p>
-      <p>Return ID: \{\{returnId\}\}</p>
-      <p>Please ship the item back to the seller within 7 days.</p>
+  <body style="margin:0;padding:0;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 0;background:#fff;">
+      <div style="background:#fff;border-radius:8px;box-shadow:0 2px 8px #0001;padding:32px 24px;max-width:480px;width:100%;text-align:center;">
+        <h1 style="margin-bottom:16px;color:#000;">Return Request Approved</h1>
+        <p style="margin-bottom:8px;color:#000;">Hi {{buyerName}},</p>
+        <p style="margin-bottom:8px;color:#000;">Your return request for <strong>{{productName}}</strong> has been approved.</p>
+        <p style="margin-bottom:8px;color:#000;">Return ID: {{returnId}}</p>
+        <p style="margin-bottom:16px;color:#000;">Please ship the item back to the seller within 7 days.</p>
+      </div>
+    </div>
+  </body>
     `,
         variables: ['buyerName', 'productName', 'returnId']
     }
