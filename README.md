@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+📌 Project Overview: Trendies Notification System
+This project was built as a technical assignment for a senior full-stack developer role at Trendies, a curated luxury resale marketplace. The goal was to demonstrate the design and implementation of a modular notification system with real-time frontend updates and simulated email delivery via Brevo.
 
-## Getting Started
+I completed this build in under two days, using a combination of Next.js 15 (App Router), TypeScript, Mantine UI, and mock backend logic. I used AI tools like Claude and ChatGPT to generate boilerplate where helpful, but took a senior-level approach in reviewing, structuring, and extending the codebase to ensure clarity, modularity, and maintainability.
 
-First, run the development server:
+This submission simulates key lifecycle events, supports real-time notification display, and includes a simple admin dashboard for managing and filtering system events.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🤝 My Approach
+While I don’t yet hold a formal senior title, my process reflects a senior mindset:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+I broke down vague requirements into modular, testable components
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+I prioritized clarity over cleverness and designed for easy future extension
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+I used AI intentionally to reduce boilerplate, but focused on clean architecture and real-world logic
 
-## Learn More
+I built both user-facing and admin-facing flows, with attention to UI polish, state management, and event flow
 
-To learn more about Next.js, take a look at the following resources:
+All backend logic is simulated using in-memory mock data and realistic async event flows. The structure is intentionally database-ready, while remaining lightweight and easy to extend.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+📝 Notes & Assumptions
+Emails are simulated only (no real sending, logs to console) via Brevo mock API structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+No persistent storage is used (data resets on reload)
 
-## Deploy on Vercel
+All events are triggered manually or through mock timers
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The UI follows Trendies’ branding guidelines where available (via provided Figma references)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🧑‍💻 Final Thoughts
+This system was designed and built to show how I approach full-stack problems with a product mindset, clean architecture, and strong attention to UX. It’s compact, testable, and ready to grow — just like I am as a developer.
