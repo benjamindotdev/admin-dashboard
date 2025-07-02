@@ -91,7 +91,7 @@ export async function sendSellerApprovalEmail(sellerId: string): Promise<boolean
     const variables = {
         sellerName: seller.name,
         badgeLevel: seller.badgeLevel || 'Standard',
-        dashboardUrl: 'https://trendies.com/dashboard'
+        dashboardUrl: 'https://trendies-omega.vercel.app/admin/dashboard'
     };
 
     const emailData: BrevoEmailRequest = {
