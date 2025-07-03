@@ -8,15 +8,15 @@ const generateRandomId = () => Math.random().toString(36).substring(2, 15);
 export const mockUsers: User[] = [
     {
         id: generateRandomId(),
-        name: '@fashionista_maya',
-        email: 'hello@benjamin.dev',
+        name: '@smail',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'seller',
         status: 'active',
         dateJoined: new Date('2024-01-15')
     },
     {
         id: generateRandomId(),
-        name: '@luxe_collector',
+        name: '@benjamin',
         email: 'hello@benjamin.dev',
         type: 'seller pro',
         status: 'active',
@@ -25,7 +25,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@style_hunter',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'buyer',
         status: 'active',
         dateJoined: new Date('2024-03-10')
@@ -33,7 +33,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@vintage_vibes',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'seller',
         status: 'pending',
         dateJoined: new Date('2024-12-01')
@@ -41,7 +41,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@trendy_shopper',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'buyer',
         status: 'active',
         dateJoined: new Date('2024-02-28')
@@ -49,7 +49,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@designer_deals',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'seller pro',
         status: 'active',
         dateJoined: new Date('2023-08-12')
@@ -57,7 +57,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@chic_closet',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'seller',
         status: 'suspended',
         dateJoined: new Date('2024-05-18')
@@ -65,7 +65,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@bargain_buyer',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'buyer',
         status: 'active',
         dateJoined: new Date('2024-07-22')
@@ -73,7 +73,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@premium_finds',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'seller pro',
         status: 'active',
         dateJoined: new Date('2024-01-05')
@@ -81,7 +81,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@street_style',
-        email: 'hello@benjamin.dev',
+        email: 'smail.bensaad@trendiesmaroc.com',
         type: 'seller',
         status: 'pending',
         dateJoined: new Date('2024-11-15')
@@ -799,7 +799,7 @@ class NotificationSimulator {
                 const newUser = {
                     id: generateRandomId(),
                     name: `@new_user_${Math.floor(Math.random() * 1000)}`,
-                    email: 'hello@benjamin.dev',
+                    email: 'smail.bensaad@trendiesmaroc.com',
                     type: Math.random() > 0.5 ? 'seller' : 'buyer' as 'seller' | 'buyer',
                     status: 'pending' as const,
                     dateJoined: new Date()
