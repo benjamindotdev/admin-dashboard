@@ -5,13 +5,14 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 
 // internal imports
 import { Notification } from '@/types';
-import { mockNotifications, markNotificationAsRead } from '@/lib/mockData';
+import { mockNotifications, markNotificationAsRead, notificationSimulator } from '@/lib/mockData';
 import { subscribeToNotifications } from '@/lib/notificationService';
 
 interface NotificationContextType {
     notifications: Notification[];
     unreadCount: number;
     markAsRead: (notificationId: string) => void;
+    markAllAsRead: () => void;
     getLatestNotifications: (count: number) => Notification[];
     addNotification: (notification: Omit<Notification, 'id' | 'createdAt'>) => void;
 }
@@ -31,15 +32,54 @@ interface NotificationProviderProps {
 }
 
 export const NotificationProvider: React.FC<NotificationProviderProps> = ({ children }) => {
-    const [notifications, setNotifications] = useState<Notification[]>(mockNotifications);
+    const [notifications, setNotifications] = useState<Notification[]>([...mockNotifications]);
 
     useEffect(() => {
+        // Initial sync with mock notifications
+        setNotifications([...mockNotifications]);
+
+        // Start notification simulator
+        if (!notificationSimulator.isActive()) {
+            notificationSimulator.start();
+        }
+
         // Subscribe to real-time notifications
         const unsubscribe = subscribeToNotifications((newNotification: Notification) => {
-            setNotifications(prev => [newNotification, ...prev]);
+            setNotifications(prev => {
+                // Check if notification already exists to avoid duplicates
+                const exists = prev.some(n => n.id === newNotification.id);
+                if (exists) return prev;
+                return [newNotification, ...prev];
+            });
         });
 
-        return unsubscribe;
+        // Subscribe to notification simulator data changes
+        const unsubscribeSimulator = notificationSimulator.subscribe(() => {
+            // Sync with mockNotifications when simulator generates new data
+            setNotifications([...mockNotifications]);
+        });
+
+        // Sync with mockNotifications periodically (fallback)
+        const syncInterval = setInterval(() => {
+            setNotifications(prevNotifications => {
+                // Check if mockNotifications has new items
+                const newItems = mockNotifications.filter(mockNotif =>
+                    !prevNotifications.some(prevNotif => prevNotif.id === mockNotif.id)
+                );
+
+                if (newItems.length > 0) {
+                    return [...newItems, ...prevNotifications];
+                }
+                return prevNotifications;
+            });
+        }, 1000); // Check every second
+
+        return () => {
+            unsubscribe();
+            unsubscribeSimulator();
+            clearInterval(syncInterval);
+            // Note: We don't stop the simulator here as it should run globally
+        };
     }, []);
 
     const unreadCount = notifications.filter(n => !n.isRead).length;
@@ -50,6 +90,18 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
             prev.map(n =>
                 n.id === notificationId ? { ...n, isRead: true } : n
             )
+        );
+    };
+
+    const markAllAsRead = () => {
+        // Mark all unread notifications as read
+        const unreadNotifications = notifications.filter(n => !n.isRead);
+        unreadNotifications.forEach(notification => {
+            markNotificationAsRead(notification.id);
+        });
+
+        setNotifications(prev =>
+            prev.map(n => ({ ...n, isRead: true }))
         );
     };
 
@@ -70,6 +122,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
         notifications,
         unreadCount,
         markAsRead,
+        markAllAsRead,
         getLatestNotifications,
         addNotification
     };
