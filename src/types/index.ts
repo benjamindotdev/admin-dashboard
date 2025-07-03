@@ -2,29 +2,52 @@ export interface User {
     id: string;
     name: string;
     email: string;
-    type: 'seller' | 'buyer' | 'admin';
-    status: 'pending' | 'approved' | 'active' | 'suspended';
+    type: 'seller' | 'buyer' | 'seller pro';
+    status: 'pending' | 'active' | 'suspended';
     badgeLevel?: 'Pro' | 'Elite' | 'Expert';
+    dateJoined: Date;
 }
 
 export interface Product {
     id: string;
     name: string;
     sellerId: string;
-    status: 'pending' | 'live' | 'sold' | 'inactive';
+    category: 'bags' | 'shoes' | 'accessories';
+    brand: string;
     price: number;
+    currency: string;
+    listedDate: Date;
+    status: 'review in progress' | 'need more data' | 'returned' | 'processing' | 'live' | 'sold';
     createdAt: Date;
     updatedAt: Date;
 }
 
 export interface Order {
     id: string;
-    productId: string;
+    orderNumber: string;
+    item: string;
     buyerId: string;
     sellerId: string;
-    status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
+    date: Date;
     amount: number;
-    createdAt: Date;
+    currency: string;
+    status: 'shipped' | 'on hold' | 'cancelled' | 'refunded';
+    payoutStatus: 'paid' | 'processing' | 'pending';
+}
+
+export interface Listing {
+    id: string;
+    productId: string;
+    product: string;
+    sellerId: string;
+    category: 'bags' | 'shoes' | 'accessories';
+    brand: string;
+    price: number;
+    currency: string;
+    dateListed: Date;
+    authentication: 'pending' | 'verified';
+    photoStatus: 'pending' | 'scheduled' | 'done';
+    listingStatus: 'submitted' | 'authenticated' | 'photographed' | 'published';
 }
 
 export interface ReturnRequest {
