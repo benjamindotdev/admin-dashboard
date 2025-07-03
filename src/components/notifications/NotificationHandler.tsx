@@ -13,11 +13,11 @@ export const NotificationHandler: React.FC = () => {
     useEffect(() => {
         // Show the latest unread notification when notifications change
         const latestNotification = notificationList.find(n => !n.isRead);
-        
+
         if (latestNotification) {
             // Check if this notification was just added (within the last 2 seconds)
             const isRecent = Date.now() - latestNotification.createdAt.getTime() < 2000;
-            
+
             if (isRecent) {
                 notifications.show({
                     title: latestNotification.title,
