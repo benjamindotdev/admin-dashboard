@@ -19,6 +19,9 @@ function emitNotification(notification: Notification) {
     subscribers.forEach(callback => callback(notification));
 }
 
+// Export emitNotification so it can be used by other modules
+export { emitNotification };
+
 export async function processNotificationEvent(eventData: EventData): Promise<void> {
     console.log(`🔔 Processing event: ${eventData.event}`, eventData.data);
 
@@ -56,7 +59,7 @@ async function handleNewListingCreated(eventData: EventData) {
     const seller = mockUsers.find(u => u.id === sellerId);
 
     if (product && seller) {
-        const notification = addNotification({
+        addNotification({
             type: 'info',
             title: 'New Listing Created',
             message: `${seller.name} created a new listing: ${product.name}`,
@@ -65,38 +68,35 @@ async function handleNewListingCreated(eventData: EventData) {
             metadata: { productId, sellerId }
         });
 
-        emitNotification(notification);
-
-        const adminNotification = addNotification({
+        addNotification({
             type: 'info',
             title: 'New Listing Pending Review',
             message: `${product.name} by ${seller.name} is pending review`,
             isRead: false,
             metadata: { productId, sellerId }
         });
-
-        emitNotification(adminNotification);
     }
 }
 
 async function handleSellerAccountApproved(eventData: EventData) {
-    const { sellerId } = eventData.data;
-    const seller = mockUsers.find(u => u.id === sellerId);
+    const { userId, userName, userEmail, userType } = eventData.data;
 
-    if (seller) {
-        const notification = addNotification({
-            type: 'success',
-            title: 'Account Approved!',
-            message: 'Your seller account has been approved. You can now start listing items.',
-            userId: sellerId as string,
-            isRead: false,
-            metadata: { sellerId }
-        });
-
-        emitNotification(notification);
-
-        await sendSellerApprovalEmail(sellerId as string);
+    // Send seller approval email
+    try {
+        await sendSellerApprovalEmail(userId as string);
+        console.log('📧 Seller approval email sent to:', userEmail);
+    } catch (error) {
+        console.error('❌ Failed to send seller approval email:', error);
     }
+
+    addNotification({
+        type: 'success',
+        title: 'Account Approved!',
+        message: `${userName} (${userType}) account has been approved and is now active`,
+        userId: userId as string,
+        isRead: false,
+        metadata: { userId, userType }
+    });
 }
 
 async function handleProductMarkedLive(eventData: EventData) {
@@ -104,57 +104,50 @@ async function handleProductMarkedLive(eventData: EventData) {
     const product = mockProducts.find(p => p.id === productId);
 
     if (product) {
-        const notification = addNotification({
+        addNotification({
             type: 'success',
             title: 'Product is Live!',
-            message: `Your product "${product.name}" is now live and visible to buyers`,
+            message: `The product "${product.name}" is now live and visible to buyers`,
             userId: sellerId as string,
             isRead: false,
-            metadata: { productId }
+            metadata: { productId, sellerId }
         });
-
-        emitNotification(notification);
     }
 }
 
 async function handleOrderPlaced(eventData: EventData) {
-    const { orderId, buyerId, sellerId } = eventData.data;
-    const order = mockOrders.find(o => o.id === orderId);
-    const product = mockProducts.find(p => p.id === order?.productId);
+    const { orderId, productId, buyerId, sellerId } = eventData.data;
+    const product = mockProducts.find(p => p.id === productId);
     const buyer = mockUsers.find(u => u.id === buyerId);
 
-    if (order && product && buyer) {
-        const sellerNotification = addNotification({
+    if (product && buyer) {
+        addNotification({
             type: 'success',
-            title: 'New Order Received!',
+            title: 'New Order Received',
             message: `${buyer.name} placed an order for ${product.name}`,
             userId: sellerId as string,
             isRead: false,
             metadata: { orderId, productId: product.id }
         });
 
-        emitNotification(sellerNotification);
-
-        const buyerNotification = addNotification({
+        addNotification({
             type: 'info',
             title: 'Order Placed',
-            message: `Your order for ${product.name} has been placed successfully`,
+            message: `The order for ${product.name} has been placed successfully`,
             userId: buyerId as string,
             isRead: false,
             metadata: { orderId, productId: product.id }
         });
-
-        emitNotification(buyerNotification);
     }
 }
 
 async function handleReturnRequestInitiated(eventData: EventData) {
     const { returnId, orderId, buyerId } = eventData.data;
     const order = mockOrders.find(o => o.id === orderId);
-    const product = mockProducts.find(p => p.id === order?.productId);
+    const product = mockProducts.find(p => p.id === order?.id);
 
     if (order && product) {
-        const sellerNotification = addNotification({
+        addNotification({
             type: 'warning',
             title: 'Return Request',
             message: `A return request has been initiated for ${product.name}`,
@@ -163,89 +156,117 @@ async function handleReturnRequestInitiated(eventData: EventData) {
             metadata: { returnId, orderId }
         });
 
-        emitNotification(sellerNotification);
-
-        const buyerNotification = addNotification({
+        addNotification({
             type: 'info',
             title: 'Return Request Submitted',
-            message: `Your return request for ${product.name} has been submitted`,
+            message: `The return request for ${product.name} has been submitted`,
             userId: buyerId as string,
             isRead: false,
             metadata: { returnId, orderId }
         });
-
-        emitNotification(buyerNotification);
     }
 }
 
 async function handleOrderConfirmed(eventData: EventData) {
-    const { orderId } = eventData.data;
-    const order = mockOrders.find(o => o.id === orderId);
-    const product = mockProducts.find(p => p.id === order?.productId);
-    const buyer = mockUsers.find(u => u.id === order?.buyerId);
-    const seller = mockUsers.find(u => u.id === order?.sellerId);
+    const {
+        orderId,
+        buyerEmail,
+        productName,
+        sellerName,
+        amount
+    } = eventData.data;
 
-    if (order && product && buyer && seller) {
+    // Send order confirmation email
+    try {
         await sendOrderConfirmationEmail(
             orderId as string,
-            buyer.email,
-            product.name,
-            seller.name,
-            order.amount
+            buyerEmail as string,
+            productName as string,
+            sellerName as string,
+            amount as number
         );
+        console.log('📧 Order confirmation email sent to:', buyerEmail);
+    } catch (error) {
+        console.error('❌ Failed to send order confirmation email:', error);
+    }
 
-        const notification = addNotification({
+    // Find the order to get buyer ID for notification
+    const order = mockOrders.find(o => o.id === orderId);
+    if (order) {
+        addNotification({
             type: 'success',
             title: 'Order Confirmed',
-            message: `Your order for ${product.name} has been confirmed`,
-            userId: order.buyerId as string,
+            message: `Order confirmation email sent for ${productName}`,
+            userId: order.buyerId,
             isRead: false,
-            metadata: { orderId }
+            metadata: { orderId, productName }
         });
-
-        emitNotification(notification);
     }
 }
 
 async function handleReturnAccepted(eventData: EventData) {
-    const { returnId, orderId } = eventData.data;
-    const order = mockOrders.find(o => o.id === orderId);
-    const product = mockProducts.find(p => p.id === order?.productId);
-    const buyer = mockUsers.find(u => u.id === order?.buyerId);
+    const {
+        returnId,
+        orderId,
+        buyerEmail,
+        buyerName,
+        productName
+    } = eventData.data;
 
-    if (order && product && buyer) {
+    // Send return accepted email
+    try {
         await sendReturnAcceptedEmail(
-            buyer.email,
-            product.name,
+            buyerEmail as string,
+            productName as string,
             returnId as string
         );
+        console.log('📧 Return accepted email sent to:', buyerEmail);
+    } catch (error) {
+        console.error('❌ Failed to send return accepted email:', error);
+    }
 
-        const notification = addNotification({
+    // Find the order to get buyer ID for notification
+    const order = mockOrders.find(o => o.id === orderId);
+    if (order) {
+        addNotification({
             type: 'success',
             title: 'Return Approved',
-            message: `Your return request for ${product.name} has been approved`,
-            userId: order.buyerId as string,
+            message: `Return request approved for ${productName} - email sent to ${buyerName}`,
+            userId: order.buyerId,
             isRead: false,
-            metadata: { returnId, orderId }
+            metadata: { returnId, orderId, productName }
         });
-
-        emitNotification(notification);
     }
 }
 
 async function handleStatusUpdated(eventData: EventData) {
-    const { type, id, oldStatus, newStatus, userId } = eventData.data;
+    const { eventType, userId, userName, userType, userEmail } = eventData.data;
 
-    const notification = addNotification({
-        type: 'info',
-        title: 'Status Updated',
-        message: `${type} status changed from ${oldStatus} to ${newStatus}`,
-        userId: userId as string | undefined,
-        isRead: false,
-        metadata: { type, id, oldStatus, newStatus }
-    });
+    if (eventType === 'user_registered') {
+        // Handle new user registration
+        console.log(`📧 New user registered: ${userName} (${userType}) - ${userEmail}`);
 
-    emitNotification(notification);
+        addNotification({
+            type: 'info',
+            title: 'New User Registration',
+            message: `${userName} registered as ${userType} - email: ${userEmail}`,
+            userId: 'admin',
+            isRead: false,
+            metadata: { userId, userType, eventType }
+        });
+    } else {
+        // Handle other status updates
+        const { type, id, oldStatus, newStatus } = eventData.data;
+
+        addNotification({
+            type: 'info',
+            title: 'Status Updated',
+            message: `${type} status changed from ${oldStatus} to ${newStatus}`,
+            userId: userId as string | undefined,
+            isRead: false,
+            metadata: { type, id, oldStatus, newStatus }
+        });
+    }
 }
 
 export async function simulateNotificationEvent(
