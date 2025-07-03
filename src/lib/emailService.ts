@@ -5,6 +5,12 @@ import { mockEmailTemplates, mockUsers } from '@/lib/mockData';
 const BREVO_API_URL = 'https://api.brevo.com/v3';
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
 
+// Debug logging for environment variable
+if (typeof window === 'undefined') { // Only log on server side
+    console.log('🔍 BREVO_API_KEY check:', BREVO_API_KEY ? 'Found' : 'Not found');
+    console.log('🔍 All env vars:', Object.keys(process.env).filter(key => key.includes('BREVO')));
+}
+
 interface BrevoEmailRequest {
     sender: {
         name: string;
@@ -172,4 +178,30 @@ export async function sendReturnAcceptedEmail(
     };
 
     return await sendBrevoEmail(emailData);
+}
+
+// Test function to debug email sending
+export async function testEmailSend(): Promise<boolean> {
+    console.log('🧪 Testing email send...');
+    console.log('🔍 API Key available:', BREVO_API_KEY ? 'Yes' : 'No');
+    console.log('🔍 API Key preview:', BREVO_API_KEY ? `${BREVO_API_KEY.substring(0, 10)}...` : 'None');
+
+    const testEmail = {
+        sender: {
+            name: 'Trendies Test',
+            email: 'contact@trendiesmaroc.com'
+        },
+        to: [{
+            name: 'Benjamin',
+            email: 'hello@benjamin.dev'
+        }],
+        subject: 'Test Email from Trendies',
+        htmlContent: `
+            <h1>Test Email</h1>
+            <p>This is a test email to verify the email service is working.</p>
+            <p>Sent at: ${new Date().toISOString()}</p>
+        `
+    };
+
+    return await sendBrevoEmail(testEmail);
 }
