@@ -44,7 +44,7 @@ async function generateRandomInteraction() {
             const notification = addNotification({
                 type: 'info',
                 title: 'New User Registration',
-                message: `${newUser.name} has joined Trendies as a ${newUser.type}`,
+                message: `${newUser.name} has joined as a ${newUser.type}`,
                 userId: 'admin',
                 isRead: false,
                 metadata: { userId: newUser.id }

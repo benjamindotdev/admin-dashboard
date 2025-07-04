@@ -97,13 +97,13 @@ export async function sendSellerApprovalEmail(sellerId: string): Promise<boolean
     const variables = {
         sellerName: seller.name,
         badgeLevel: seller.badgeLevel || 'Standard',
-        dashboardUrl: 'https://trendies-omega.vercel.app/admin/dashboard'
+        dashboardUrl: 'https://admin-dashboard-omega.vercel.app/admin/dashboard'
     };
 
     const emailData: BrevoEmailRequest = {
         sender: {
-            name: 'Trendies Morocco',
-            email: 'contact@trendiesmaroc.com'
+            name: '...',
+            email: '...'
         },
         to: [{
             name: seller.name,
@@ -136,8 +136,8 @@ export async function sendOrderConfirmationEmail(
 
     const emailData: BrevoEmailRequest = {
         sender: {
-            name: 'Trendies Morocco',
-            email: 'contact@trendiesmaroc.com'
+            name: '...',
+            email: '...'
         },
         to: [{
             name: variables.buyerName,
@@ -166,8 +166,8 @@ export async function sendReturnAcceptedEmail(
 
     const emailData: BrevoEmailRequest = {
         sender: {
-            name: 'Trendies Morocco',
-            email: 'contact@trendiesmaroc.com'
+            name: '...',
+            email: '...'
         },
         to: [{
             name: variables.buyerName,
@@ -188,14 +188,14 @@ export async function testEmailSend(): Promise<boolean> {
 
     const testEmail = {
         sender: {
-            name: 'Trendies Test',
-            email: 'contact@trendiesmaroc.com'
+            name: '...',
+            email: '...'
         },
         to: [{
             name: 'Benjamin',
             email: 'hello@benjamin.dev'
         }],
-        subject: 'Test Email from Trendies',
+        subject: '...',
         htmlContent: `
             <h1>Test Email</h1>
             <p>This is a test email to verify the email service is working.</p>

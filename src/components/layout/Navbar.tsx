@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react'
 import { IconHeart, IconMessageCircle, IconBell, IconUser, IconLogout, IconX } from '@tabler/icons-react';
 import { useNotifications } from '@/contexts/NotificationContext';
