@@ -1,23 +1,23 @@
-# 📌 Project Overview: Trendies Notification System
+# 📌 Project Overview: Notification System Prototype
 
-This project was built as a technical assignment for a **senior full-stack developer role at Trendies**. The goal was to demonstrate the design and implementation of a **modular notification system** with real-time frontend updates and simulated email delivery via Brevo.
+This project was built as part of a **technical assignment for a senior full-stack developer role**. The goal was to demonstrate the design and implementation of a **modular notification system** with real-time frontend updates and simulated email delivery.
 
-I completed this build in **under two days**, using a combination of **Next.js 15 (App Router), TypeScript, Mantine UI**, and mock backend logic. I used AI tools like Claude and ChatGPT to generate boilerplate where helpful, but took a **senior-level approach** in reviewing, structuring, and extending the codebase to ensure clarity, modularity, and maintainability.
+I completed the build in **under two days**, using **Next.js 15 (App Router), TypeScript, Mantine UI**, and mock backend logic. I used AI tools like Claude and ChatGPT to assist with boilerplate setup, but took a **senior-level approach** in reviewing, refactoring, and extending the codebase for clarity, modularity, and maintainability.
 
-This submission simulates key lifecycle events, supports real-time notification display, and includes a simple admin dashboard for managing and filtering system events.
+The system simulates real-world product lifecycle events, provides real-time notification updates, and includes a lightweight admin dashboard for managing and filtering system messages.
 
 ---
 
 ## 🤝 My Approach
 
-While I don’t yet hold a formal senior title, my process reflects a **senior mindset**:
+While I don’t yet hold a formal senior title, I approached this task with a **senior mindset** and product focus:
 
-- I broke down vague requirements into **modular, testable components**
-- I prioritized **clarity over cleverness** and designed for easy future extension
-- I used AI intentionally to reduce boilerplate, but focused on **clean architecture and real-world logic**
-- I built both **user-facing and admin-facing flows**, with attention to UI polish, state management, and event flow
+- Broke down vague requirements into **clear, testable components**
+- Prioritized **clean architecture over clever hacks**
+- Used AI **intentionally** to reduce boilerplate, not to replace decision-making
+- Built both **user-facing and admin-facing flows**, with an eye toward real-world usage and extendability
 
-All backend logic is **simulated using in-memory mock data** and realistic async event flows. The structure is intentionally **database-ready**, while remaining lightweight and easy to extend.
+Backend logic is **fully simulated** using mock data and realistic async flows. The structure was designed to be **database-ready**, but remains lightweight for demo purposes.
 
 ---
 
@@ -25,41 +25,42 @@ All backend logic is **simulated using in-memory mock data** and realistic async
 
 ### 📬 Email Integration
 
-- Email sending is **simulated only** — messages are logged to the console using a Brevo-style helper function.
-- Templates include **dynamic placeholder values** (e.g. `{{userName}}`, `{{productName}}`), and simulate how real transactional emails might be structured.
-- In a production environment, this would be swapped for **actual Brevo API integration** using authenticated keys and templated email content.
+- Email sending was **initially implemented**, but later disabled to avoid unnecessary API usage after the opportunity concluded.
+- Templates include **dynamic placeholders** (e.g. `{{userName}}`, `{{productName}}`) to simulate realistic transactional email behavior.
+- A simple Brevo-style service is included to demonstrate how messages could be structured and triggered.
 
 ### 💾 Data Handling
 
-- All data is **mocked and stored in-memory** using arrays and React state (no database connection).
-- Data types for users, products, orders, and notifications are designed to reflect **realistic backend structures** for future persistence.
-- Refreshing the page resets all data — no `localStorage` or persistent storage is used.
+- All data is **stored in-memory** (no external DB).
+- Mock objects reflect real-world structures (users, products, orders, notifications).
+- Data is reset on refresh — no persistence layer (e.g. localStorage, DB, etc.) was included.
 
 ### ⚡ Event Simulation
 
-- System events (e.g. “Listing created”, “Order placed”) are **manually triggered** through UI buttons or simulated with `setTimeout`.
-- Real-time UI updates are handled via **React Context**, with no WebSocket or polling implementation.
-- This approach was chosen to keep the system **simple and focused**, in line with the brief and time constraints.
+- Events like “Listing created” or “Order placed” are **triggered via the UI** or simulated using `setTimeout`.
+- Real-time updates are handled with **React Context** — no polling or WebSockets were included due to scope and time constraints.
 
 ### 🧠 Assumptions
 
-- All users are assumed to be **authenticated** — no login or access control was implemented.
-- Admin routes are **publicly accessible** in this demo for simplicity.
-- Figma references were used to loosely guide layout and component choices, with design fidelity approximated using Mantine UI components.
-- Email templates were simplified for **speed and clarity**, not for full branding polish.
+- **All users are assumed authenticated** — no login system or role-based gating.
+- **Admin pages are public** for demo simplicity.
+- UI/UX was loosely modeled after provided references, using Mantine components and structure.
+- **Email content and UI fidelity** were simplified to focus on core logic and deliverability.
 
 ### 🔮 Future Improvements
 
-If this were being shipped for production, the next steps would include:
+If this were to be developed further:
 
-- Adding **database support** (e.g. PostgreSQL with Prisma) for persistent notifications and user data.
-- Integrating **Brevo with actual transactional templates** and error handling.
-- Securing admin routes with **authentication and role-based access control**.
-- Supporting **WebSocket-based real-time notification updates** per user.
-- Implementing **read/unread state per user** with filtering and persistence.
+- Add a real **database layer** (e.g., Prisma/PostgreSQL)
+- Integrate **authenticated Brevo transactional emails**
+- Implement **role-based access and route protection**
+- Replace React Context with **WebSocket or Server-Sent Events**
+- Store and track **notification read/unread state** with filters per user
 
 ---
 
 ## 🧑‍💻 Final Thoughts
 
-The project has a great way for me to experience the benefits of Mantine in a short period of time. While the backend was simulated, I look forward to also adding Nest.js to my resume, if I am successful with the application.
+While the opportunity itself didn’t lead to a role, it offered a valuable chance to practice rapid prototyping, modular architecture, and real-time logic simulation using modern tools. I’m especially glad to have experienced **Mantine UI in production-style conditions**, and I look forward to expanding my experience with **NestJS** in future backend projects.
+
+This project reflects how I solve problems when stakes are high, time is short, and the requirements are open-ended. I'm proud of the result — and even more so of the mindset behind it.
