@@ -62,12 +62,7 @@ export function Navbar() {
 
     return (
         <div className="h-15 border-b border-gray-200 sticky top-0 z-50 flex items-center justify-between px-4 bg-white">
-            <Image
-                src="/trendies-logo.svg"
-                alt="Trendies Logo"
-                width={120}
-                height={40}
-            />
+            <h3 className="text-lg font-semibold text-gray-900">Admin</h3>
             <div className="flex items-center space-x-4">
                 <IconHeart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
                 <IconMessageCircle className="text-gray-600 hover:text-gray-800 cursor-pointer" />

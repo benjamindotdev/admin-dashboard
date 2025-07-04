@@ -16,8 +16,8 @@ const inter = Inter({
     subsets: ["latin"],
 });
 export const metadata: Metadata = {
-    title: "Trendies",
-    description: "Votre boutique de mode en ligne",
+    title: "Admin Dashboard",
+    description: "Example project for Senior Dev role",
 };
 
 export default function RootLayout({
@@ -30,7 +30,7 @@ export default function RootLayout({
             <head>
                 <meta charSet="UTF-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" type="image/x-icon" href="/trendies-logo.svg" />
+                <link rel="icon" type="image/x-icon" href="/next.svg" />
             </head>
             <body
                 className={`${inter.variable} antialiased`}

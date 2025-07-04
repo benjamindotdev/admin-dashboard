@@ -9,7 +9,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@smail',
-        email: 'smail.bensaad@trendiesmaroc.com',
+        email: '...',
         type: 'seller',
         status: 'active',
         dateJoined: new Date('2024-01-15')
@@ -25,7 +25,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@style_hunter',
-        email: 'smail.bensaad@trendiesmaroc.com',
+        email: '...',
         type: 'buyer',
         status: 'active',
         dateJoined: new Date('2024-03-10')
@@ -33,7 +33,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@vintage_vibes',
-        email: 'smail.bensaad@trendiesmaroc.com',
+        email: '...',
         type: 'seller',
         status: 'pending',
         dateJoined: new Date('2024-12-01')
@@ -41,7 +41,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@trendy_shopper',
-        email: 'smail.bensaad@trendiesmaroc.com',
+        email: '...',
         type: 'buyer',
         status: 'active',
         dateJoined: new Date('2024-02-28')
@@ -49,7 +49,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@designer_deals',
-        email: 'smail.bensaad@trendiesmaroc.com',
+        email: '...',
         type: 'seller pro',
         status: 'active',
         dateJoined: new Date('2023-08-12')
@@ -57,7 +57,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@chic_closet',
-        email: 'smail.bensaad@trendiesmaroc.com',
+        email: '...',
         type: 'seller',
         status: 'suspended',
         dateJoined: new Date('2024-05-18')
@@ -65,7 +65,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@bargain_buyer',
-        email: 'smail.bensaad@trendiesmaroc.com',
+        email: '...',
         type: 'buyer',
         status: 'active',
         dateJoined: new Date('2024-07-22')
@@ -73,7 +73,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@premium_finds',
-        email: 'smail.bensaad@trendiesmaroc.com',
+        email: '...',
         type: 'seller pro',
         status: 'active',
         dateJoined: new Date('2024-01-05')
@@ -81,7 +81,7 @@ export const mockUsers: User[] = [
     {
         id: generateRandomId(),
         name: '@street_style',
-        email: 'smail.bensaad@trendiesmaroc.com',
+        email: '...',
         type: 'seller',
         status: 'pending',
         dateJoined: new Date('2024-11-15')
@@ -645,7 +645,7 @@ export const mockEmailTemplates: EmailTemplate[] = [
     {
         id: 'seller-approval',
         name: 'Seller Account Approved',
-        subject: 'Welcome to Trendies! Your seller account has been approved',
+        subject: 'Welcome! Your seller account has been approved',
         htmlContent: `
   <body style="margin:0;padding:0;">
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 0;background:#fff;">
@@ -799,7 +799,7 @@ class NotificationSimulator {
                 const newUser = {
                     id: generateRandomId(),
                     name: `@new_user_${Math.floor(Math.random() * 1000)}`,
-                    email: 'smail.bensaad@trendiesmaroc.com',
+                    email: '...',
                     type: Math.random() > 0.5 ? 'seller' : 'buyer' as 'seller' | 'buyer',
                     status: 'pending' as const,
                     dateJoined: new Date()
@@ -818,7 +818,7 @@ class NotificationSimulator {
                 const notification = addNotification({
                     type: 'info',
                     title: 'New User Registration',
-                    message: `${newUser.name} has joined Trendies as a ${newUser.type}`,
+                    message: `${newUser.name} has joined as a ${newUser.type}`,
                     userId: 'admin',
                     isRead: false,
                     metadata: { userId: newUser.id }
